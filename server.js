@@ -15,12 +15,16 @@ app.get('/api/hello', (req, res) => {
   res.json({greeting: 'hello API'});
 });
 
+let resObject = {};
 app.get('/api/whoami', (req, res) => {
-  let infoObject;
-  let ipidress, lan, software;
-  infoObject = { ipidress, lan, software}
+  let ipaddress = req.ip;
+  let lan = req.get('Accept-Language');
+  let sw = req.get('User-Agent');
+  resObject['ipaddress'] = ipaddress;
+  resObject['language'] = lan;
+  resObject['software'] =  sw;
 
-  res.json({...infoObject});
+  res.json(resObject);
 })
 
 var listener = app.listen(process.env.PORT, () => {
